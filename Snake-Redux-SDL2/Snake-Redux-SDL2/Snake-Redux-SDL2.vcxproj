@@ -24,6 +24,9 @@
       </SubType>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="snake.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5a92051b-6aa3-4da4-befa-cdca365a2539}</ProjectGuid>
     <RootNamespace>Snake_Redux_SDL2</RootNamespace>
