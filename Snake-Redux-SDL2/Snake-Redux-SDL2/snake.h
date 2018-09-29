@@ -10,7 +10,7 @@ private:
 	void set_points(int);
 	void set_current_size(int);
 	void set_movement(string);
-	void grow_snake(int, SDL_Color);
+	void grow_snake(int x, SDL_Color);
 	void logic();
 		
 
