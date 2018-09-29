@@ -6,13 +6,15 @@ private:
 	int points;
 	int current_size;
 	bool win_state;
-	set_points(int);
-	set_current_size(int);
+	bool touching;
+
+	void set_points(int);
+	void set_current_size(int);
 
 		
 
 public:
-	get_points(int);
-	get_current_size(int);
+	int get_points(int);
+	int get_current_size(int);
 	
 };
