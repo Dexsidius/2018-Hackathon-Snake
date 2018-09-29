@@ -12,10 +12,15 @@ Node::Node(int x, int y, int w, int h, SDL_Color color)
 	rect.w = w;
 	rect.h = h;
 
+	prev_location.x = rect.x;
+	prev_location.y = rect.y;
+
 }
 
 void Node::SetLocation(int x, int y)
 {
+	prev_location.x = rect.x;
+	prev_location.y = rect.y;
 	rect.x = x;
 	rect.y = y;
 }
