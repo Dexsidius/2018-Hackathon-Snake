@@ -6,7 +6,7 @@ using namespace std;
 class SpriteCache {
 private:
 	map<string, SDL_Texture *> sprite_cache;
-	SpriteCache();
 public:
+	~SpriteCache();
 	SDL_Texture * Load_Sprites(SDL_Renderer * renderer, string filename);
-}cache;
+} cache;
