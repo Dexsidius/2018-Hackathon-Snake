@@ -23,9 +23,11 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SpriteCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="snake.h" />
+    <ClInclude Include="SpriteCache.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5a92051b-6aa3-4da4-befa-cdca365a2539}</ProjectGuid>
