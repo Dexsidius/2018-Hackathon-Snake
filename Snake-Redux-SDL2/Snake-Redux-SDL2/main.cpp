@@ -1,4 +1,7 @@
 #include <SDL.h>
+#include <string>
+
+using namespace std;
 
 int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is the entry point, and initializes SDL2
 {
@@ -15,7 +18,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 	bool running = true;
 
 	//Creating a window
-	 window = SDL_CreateWindow("SDL2 Application", SDL_WINDOWPOS_UNDEFINED,
+	 window = SDL_CreateWindow("Snake Redux", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
 	 screen = SDL_GetWindowSurface(window);
 	 Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255);
@@ -28,11 +31,13 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		 SDL_UpdateWindowSurface(window);
 
 
-		 SDL_WaitEvent(&event);
-		 if (event.type == SDL_QUIT) {
+		 SDL_PollEvent(&event);
+		 switch (event.type) {
+		 case SDL_QUIT:
 			 running = false;
 			 break;
 		 }
+			 
 		 
 	 }
 	SDL_DestroyWindow(window);
