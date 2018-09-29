@@ -16,28 +16,63 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 	SDL_Surface * screen;
 	SDL_Renderer * renderer;
 	bool running = true;
+	bool Fullscreen = false;
+
+	//Mouse Rect and Click Bool
+	bool mouse_click = false;
+	SDL_Rect mouse_rect = SDL_Rect({ 0, 0, 10, 10 });
 
 	//Creating a window
 	 window = SDL_CreateWindow("Snake Redux", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
-	 screen = SDL_GetWindowSurface(window);
-	 Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255);
+	 renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_PRESENTVSYNC);
 	 
-
+	 
 	//Event System
 	 while (running) {
-		 screen = SDL_GetWindowSurface(window);
-		 SDL_FillRect(screen, NULL, white);
-		 SDL_UpdateWindowSurface(window);
 
-
+		 //OS Events
 		 SDL_PollEvent(&event);
 		 switch (event.type) {
 		 case SDL_QUIT:
 			 running = false;
 			 break;
 		 }
-			 
+
+		 //Game Events 
+		 //We use enum so that we can easily switch between game states
+		 enum Game_States { MENU = 1, CLASSIC = 2, REDUX_MODE = 3
+		 OPTIONS = 4};
+		 Game_States state = MENU;
+		 switch (state) {
+		 case MENU:
+			 if (SDL_HasIntersection(&mouse_rect, x.location))
+				 if (mouse_click);
+					state = CLASSIC;
+
+		     if (SDL_HasIntersection(&mouse_rect, x.location))
+				 if (mouse_click);
+					state = REDUX_MODE;
+			
+			if (SDL_HasIntersection(&mouse_rect, x.location))
+				if (mouse_click);
+					state = OPTIONS;
+		 case CLASSIC:
+
+		 case REDUX_MODE:
+
+		 case OPTIONS:
+
+		 }
+
+		 //Rendering
+		 SDL_SetRenderDrawColor(renderer,242,242,242,255)
+
+
+		 
+		 
+
+
 		 
 	 }
 	SDL_DestroyWindow(window);

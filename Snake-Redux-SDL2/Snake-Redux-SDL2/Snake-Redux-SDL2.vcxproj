@@ -78,16 +78,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\Isa\Documents\Visual Studio 2015\SDL2\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\xavie\Documents\SDL2-2.0.8\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\Isa\Documents\Visual Studio 2015\SDL2\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\xavie\Documents\SDL2-2.0.8\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\Isa\Documents\Visual Studio 2015\SDL2\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\xavie\Documents\SDL2-2.0.8\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\Isa\Documents\Visual Studio 2015\SDL2\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\xavie\Documents\SDL2-2.0.8\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,12 +96,12 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib; SDL2main.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
+      <Command>copy "C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Output SDL2 to the built project</Message>
@@ -114,12 +114,12 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib; SDL2main.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
+      <Command>copy "C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy and build SDL2 to the Project</Message>
@@ -136,12 +136,12 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib; SDL2main.lib</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
+      <Command>copy "C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
       <Message>Output SDL2 to the built project</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -157,11 +157,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "C:\Users\Isa\Documents\Visual Studio 2015\SDL2\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
+      <Command>copy "C:\Users\xavie\Documents\SDL2-2.0.8\lib\$(PlatformTargetAsMSBuildArchitecture)\SDL2.dll" "$(OutDir)SDL2.dll"</Command>
       <Message>Copy and build SDL2 to the Project</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
