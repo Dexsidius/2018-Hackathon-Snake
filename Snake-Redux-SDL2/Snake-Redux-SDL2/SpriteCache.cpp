@@ -1,5 +1,7 @@
 #include "SpriteCache.h"
 
+SpriteCache cache = SpriteCache();
+
 SpriteCache::~SpriteCache()
 {
 	for (auto item : sprite_cache) {

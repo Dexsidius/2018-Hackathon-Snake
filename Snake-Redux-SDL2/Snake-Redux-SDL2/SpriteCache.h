@@ -9,4 +9,7 @@ private:
 public:
 	~SpriteCache();
 	SDL_Texture * Load_Sprites(SDL_Renderer * renderer, string filename);
-} cache;
+};
+
+extern SpriteCache cache;
+

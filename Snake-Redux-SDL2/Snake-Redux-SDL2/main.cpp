@@ -1,11 +1,13 @@
 #include <SDL.h>
 #include <string>
+#include <vector>
+#include "Sprite_Object.h"
+
 
 using namespace std;
 
 int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is the entry point, and initializes SDL2
 {
-	const int WIDTH = 640, HEIGHT = 480;
 	SDL_Init(SDL_INIT_VIDEO);       //This activates a specific SDL2 subsystem  
 
 	//Forward Declerations
@@ -25,6 +27,13 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
 	 renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_PRESENTVSYNC);
 	 
+	//Buttons
+	 Sprite_Object menu_items[3]{
+		 Sprite_Object(0,0,600,600,"Snaked_Redux_Sprites/menu.bmp", renderer),
+		 Sprite_Object(300,600,100,100,"Snaked_Redux_Sprites/classic.bmp", renderer),
+		 Sprite_Object(200,200,100,100,"Snaked_Redux_Sprites/Redux.bmp",renderer),
+	 };
+	//Power Ups
 	 
 	//Event System
 	 while (running) {
@@ -39,44 +48,70 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 
 		 //Game Events 
 		 //We use enum so that we can easily switch between game states
-		 enum Game_States { MENU = 1, CLASSIC = 2, REDUX_MODE = 3, OPTIONS = 4 };
+		 enum Game_States { MENU = 0, CLASSIC = 1, REDUX_MODE = 2, OPTIONS = 3 };
 		 Game_States state = MENU;
 		 switch (state) {
 		 case MENU: // Cases for when the mouse is hovering over an button or when it is clicking
-			 if (SDL_HasIntersection(&mouse_rect, CLASSIC.location))
-				 if (mouse_click);
-					state = CLASSIC;
-					break
-		     if (SDL_HasIntersection(&mouse_rect, REDUX_MODE.location))
-				 if (mouse_click);
-					state = REDUX_MODE;
-					break
-			 if (SDL_HasIntersection(&mouse_rect, OPTIONS.location))
-				if (mouse_click);
-					state = OPTIONS;
-					break
+			 if (menu_items[CLASSIC].IsTouching(&mouse_rect)) {
+				 if (mouse_click) {
+					 state = CLASSIC;
+				 }	
+			 }
+			 else if (menu_items[REDUX_MODE].IsTouching(&mouse_rect)) {
+				 if (mouse_click)
+					 state = REDUX_MODE;
+			 }
+			 else if (menu_items[OPTIONS].IsTouching(&mouse_rect)) {
+				 if (mouse_click) {
+					 state = OPTIONS;
+				 }
+			 }
+			 break;
+				 
 		 case CLASSIC:
-			 if (SDL_HasIntersection(&mouse_rect, OPTIONS.location))
-				 if (mouse_click);
-					state = OPTIONS;
-					break
-			 
+			 if (menu_items[OPTIONS].IsTouching(&mouse_rect)) {
+				 if (mouse_click) {
+					 state = OPTIONS;
+				 }
+			 }
 		 case REDUX_MODE:
+			 if (menu_items[OPTIONS].IsTouching(&mouse_rect)) {
+				 if (mouse_click) {
+					 state = OPTIONS;
+				 }
+			 }
 
 		 case OPTIONS:
-			 if (SDL_HasIntersection(&mouse_rect, fullscreen.location))
-				 if (mouse_click);
-					if (Fullscreen == false);
-						Fullscreen = true;
-					elif (Fullscreen == true);
-						Fullscreen = false;
-
-
+			 break;
 		 }
 
 		 //Rendering
-		 SDL_SetRenderDrawColor(renderer, 242, 242, 242, 255);
+		 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		 SDL_RenderClear(renderer);
+		 switch (state) {
+		 case MENU:
+			 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+			 menu_items[MENU].Render(renderer);
+			 menu_items[CLASSIC].Render(renderer);
+			 menu_items[REDUX_MODE].Render(renderer);
+			 break;
+		 case CLASSIC:
+			 break;
+		 case REDUX_MODE:
+			 break;
+		 case OPTIONS:
+			 break;
+
+		 }
+
+		 //....rendering stuff goes here
+
+
+		 SDL_RenderPresent(renderer);
+		 
+
+
+
 
 	 }
 	SDL_DestroyWindow(window);

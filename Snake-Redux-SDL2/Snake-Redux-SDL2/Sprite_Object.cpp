@@ -1,18 +1,20 @@
 #include "Sprite_Object.h"
 
+
+
 Sprite_Object::Sprite_Object(int x, int y, int w, int h, string filepath, SDL_Renderer * renderer)
 {
 	texture = cache.Load_Sprites(renderer, filepath);
 	rect.x = x;
-	rect.h = h;
+	rect.y = y;
 	rect.w = w;
 	rect.h = h;
-	context = renderer;
+	
 }
 
-void Sprite_Object::Render()
+void Sprite_Object::Render(SDL_Renderer * renderer)
 {
-	SDL_RenderCopy(context, texture, NULL, &rect);
+	SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
 
 SDL_Rect * Sprite_Object::GetRect()
