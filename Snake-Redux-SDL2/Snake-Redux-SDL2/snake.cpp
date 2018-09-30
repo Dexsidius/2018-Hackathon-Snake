@@ -3,33 +3,64 @@
 
 using namespace std;
 
-void Snake::set_points(int points)
+void Snake::set_max_size(int size)
 {
-	int new_points = points;
+	int max_size = size;
+
 }
 
-void Snake::set_current_size(int size)
+void Snake::set_movement(string d, int x)
 {
-	int new_size = size;
+	speed = x;
+	direction = d;
 }
 
-void Snake::set_movement(string direction, int x)
+void Snake::update_children()
 {
+	for (int i = 1; i < body.size; i++)
+		body[i].SetLocation(body[i - 1].prev_location.x, body[i - 1].prev_location.y);
+}
+
+void Snake::grow_snake( SDL_Color color)
+{
+	SDL_Rect * location = body[body.size - 1].GetLocation();
+	body.push_back(Node(location->x, location->y, location->w, location->h, color));
 	
 }
 
-void Snake::grow_snake(int x, SDL_Color color)
+void Snake::logic(bool wall )
 {
-	for (auto & part : body) {
-		if (part == NULL) {
 
-		}
-		
+	if (direction == "LEFT") {
+		body[0].rect.x -= speed;
 	}
-}
+	else if (direction == "RIGHT") {
+		body[0].rect.x += speed;
+	}
+	else if (direction == "UP") {
+		body[0].rect.y -= speed;
+	}
+	else if (direction == "DOWN") {
+		body[0].rect.y += speed;
+	}
 
-void Snake::logic()
-{
+	update_children();
+
+	if (!wall) {
+		if (body[0].rect.y < 2)
+			body[0];
+	}
+
+
+	for (auto i = 1; i < body.size(); i++) {
+		if (body[0].IsTouching(&body[i].rect)) {
+			lost = true;
+			break;
+		}
+	}
+
+
+
 }
 
 int Snake::get_points(int points)
@@ -45,6 +76,7 @@ int Snake:: get_current_size(int size)
 
 Snake::Snake(int x, int y, int w, int h, SDL_Color color)
 {
+	body.push_back(Node(x, y, w, h, color));
 }
 
 void Snake::render(SDL_Renderer * renderer, string)
