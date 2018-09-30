@@ -48,16 +48,16 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		 Sprite_Object(75,350,100,100,"Snaked_Redux_Sprites/classic.bmp", renderer),
 		 Sprite_Object(200,350,100,100,"Snaked_Redux_Sprites/Redux.bmp",renderer),
 		 Sprite_Object(500,350,100,100,"Snaked_Redux_Sprites/Option.bmp",renderer),
-		 Sprite_Object(400,0,100,100,"Snaked_Redux_Sprites/fullscreen.bmp",renderer),
-		 Sprite_Object(300,400,100,100,"Snaked_Redux_Sprites/Quit.bmp",renderer),
-		 Sprite_Object(300,400,100,100,"Snaked_Redux_Sprites/back.bmp",renderer)
+		 Sprite_Object(400,350,100,100,"Snaked_Redux_Sprites/fullscreen.bmp",renderer),
+		 Sprite_Object(300,350,100,100,"Snaked_Redux_Sprites/Quit.bmp",renderer),
+		 Sprite_Object(500,350,100,100,"Snaked_Redux_Sprites/back.bmp",renderer)
 	 };
 	//Power Ups
 	 
 	//Event System
 	 Game_States state = MENU;
 	 while (running) {
-		
+		 mouse_click = false;
 		 //OS Events
 		 SDL_PollEvent(&event); // Checking for if Quit has been activated
 		 switch (event.type) {
@@ -69,15 +69,17 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		 case SDL_MOUSEMOTION:
 			 mouse_rect.x = event.motion.x;
 			 mouse_rect.y = event.motion.y;
+			 break;
 		 }
 		 switch (event.type) {
 		 case SDL_MOUSEBUTTONDOWN:
 			 switch (event.button.button) {
 			 case SDL_BUTTON_LEFT:
 				 mouse_click = true;
+				 break;
 			 }
+			 break;
 		 }
-
 		 switch (state) {
 		 case MENU: // Cases for when the mouse is hovering over an button or when it is clicking
 			 if (menu_items[CLASSIC].IsTouching(&mouse_rect)) {
@@ -95,19 +97,20 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 				 }
 			 }
 			 break;
-				 
 		 case CLASSIC:
 			 if (menu_items[OPTIONS].IsTouching(&mouse_rect)) {
 				 if (mouse_click) {
 					 state = OPTIONS;
 				 }
 			 }
+			 break;
 		 case REDUX_MODE:
 			 if (menu_items[OPTIONS].IsTouching(&mouse_rect)) {
 				 if (mouse_click) {
 					 state = OPTIONS;
 				 }
 			 }
+			 break;
 
 		 case OPTIONS:
 			 if (menu_items[FULLSCREEN].IsTouching(&mouse_rect)) {
@@ -120,7 +123,6 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 					 }
 				 }
 			 }
-
 			 break;
 		 }
 
@@ -133,6 +135,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 			 menu_items[CLASSIC].Render(renderer);
 			 menu_items[REDUX_MODE].Render(renderer);
 			 menu_items[OPTIONS].Render(renderer);
+			 menu_items[FULLSCREEN].Render(renderer);
 			 break;
 		 case CLASSIC:
 			 menu_items[OPTIONS].Render(renderer);
