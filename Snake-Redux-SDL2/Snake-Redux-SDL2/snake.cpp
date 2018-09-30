@@ -1,5 +1,4 @@
 #include "snake.h"
-#include "PowerUps.h"
 
 using namespace std;
 
@@ -17,14 +16,17 @@ void Snake::set_movement(string d, int x)
 
 void Snake::update_children()
 {
-	for (int i = 1; i < body.size; i++)
+	for (int i = 1; i < body.size(); i++) {
 		body[i].SetLocation(body[i - 1].prev_location.x, body[i - 1].prev_location.y);
+	}
+		
 }
 
 void Snake::grow_snake( SDL_Color color)
 {
-	SDL_Rect * location = body[body.size - 1].GetLocation();
-	body.push_back(Node(location->x, location->y, location->w, location->h, color));
+	SDL_Rect location = body[int(body.size()) - 1].GetLocation();
+	body.push_back(Node(location.x, location.y, location.w, location.h, color));
+	SDL_free(&location);
 	
 }
 

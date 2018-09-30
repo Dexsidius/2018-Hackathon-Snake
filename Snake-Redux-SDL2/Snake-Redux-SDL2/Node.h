@@ -6,6 +6,7 @@ struct location { int x, y; };
 class Node {
 private:
 	SDL_Color clr;
+	
 public:
 	SDL_Rect rect = { 0,0,0,0 };
 	location prev_location;

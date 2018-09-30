@@ -2,7 +2,7 @@
 
 Node::~Node()
 {
-	
+	SDL_free(&rect);
 }
 
 Node::Node(int x, int y, int w, int h, SDL_Color color)
