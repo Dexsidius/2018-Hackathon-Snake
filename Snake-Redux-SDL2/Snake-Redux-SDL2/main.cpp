@@ -6,6 +6,17 @@
 
 using namespace std;
 
+
+void Screenstate(bool a, SDL_Window * window, SDL_Renderer * renderer) {
+		if (a) {
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			SDL_RenderSetLogicalSize(renderer, 800, 600);
+		}
+		else {
+			SDL_SetWindowFullscreen(window, 0);
+		}
+}
+
 int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is the entry point, and initializes SDL2
 {
 	SDL_Init(SDL_INIT_VIDEO);       //This activates a specific SDL2 subsystem  
@@ -26,18 +37,27 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 	 window = SDL_CreateWindow("Snake Redux", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
 	 renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_PRESENTVSYNC);
-	 
+
+	 //Game Events 
+		//We use enum so that we can easily switch between game states
+	 enum Game_States { MENU = 0, CLASSIC = 1, REDUX_MODE = 2, OPTIONS = 3, FULLSCREEN = 4, QUIT = 5, BACK = 6};
+
 	//Buttons
-	 Sprite_Object menu_items[3]{
+	 Sprite_Object menu_items[7]{
 		 Sprite_Object(0,0,600,600,"Snaked_Redux_Sprites/menu.bmp", renderer),
-		 Sprite_Object(300,600,100,100,"Snaked_Redux_Sprites/classic.bmp", renderer),
-		 Sprite_Object(200,200,100,100,"Snaked_Redux_Sprites/Redux.bmp",renderer),
+		 Sprite_Object(75,350,100,100,"Snaked_Redux_Sprites/classic.bmp", renderer),
+		 Sprite_Object(200,350,100,100,"Snaked_Redux_Sprites/Redux.bmp",renderer),
+		 Sprite_Object(500,350,100,100,"Snaked_Redux_Sprites/Option.bmp",renderer),
+		 Sprite_Object(400,0,100,100,"Snaked_Redux_Sprites/fullscreen.bmp",renderer),
+		 Sprite_Object(300,400,100,100,"Snaked_Redux_Sprites/Quit.bmp",renderer),
+		 Sprite_Object(300,400,100,100,"Snaked_Redux_Sprites/back.bmp",renderer)
 	 };
 	//Power Ups
 	 
 	//Event System
+	 Game_States state = MENU;
 	 while (running) {
-
+		
 		 //OS Events
 		 SDL_PollEvent(&event); // Checking for if Quit has been activated
 		 switch (event.type) {
@@ -45,11 +65,19 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 			 running = false;
 			 break;
 		 }
+		 switch (event.type) {
+		 case SDL_MOUSEMOTION:
+			 mouse_rect.x = event.motion.x;
+			 mouse_rect.y = event.motion.y;
+		 }
+		 switch (event.type) {
+		 case SDL_MOUSEBUTTONDOWN:
+			 switch (event.button.button) {
+			 case SDL_BUTTON_LEFT:
+				 mouse_click = true;
+			 }
+		 }
 
-		 //Game Events 
-		 //We use enum so that we can easily switch between game states
-		 enum Game_States { MENU = 0, CLASSIC = 1, REDUX_MODE = 2, OPTIONS = 3 };
-		 Game_States state = MENU;
 		 switch (state) {
 		 case MENU: // Cases for when the mouse is hovering over an button or when it is clicking
 			 if (menu_items[CLASSIC].IsTouching(&mouse_rect)) {
@@ -82,6 +110,17 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 			 }
 
 		 case OPTIONS:
+			 if (menu_items[FULLSCREEN].IsTouching(&mouse_rect)) {
+				 if (mouse_click) {
+					 if (!Fullscreen) {
+						 Fullscreen = true;
+					 }
+					 else if (Fullscreen) {
+						 Fullscreen = false;
+					 }
+				 }
+			 }
+
 			 break;
 		 }
 
@@ -90,16 +129,21 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		 SDL_RenderClear(renderer);
 		 switch (state) {
 		 case MENU:
-			 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 			 menu_items[MENU].Render(renderer);
 			 menu_items[CLASSIC].Render(renderer);
 			 menu_items[REDUX_MODE].Render(renderer);
+			 menu_items[OPTIONS].Render(renderer);
 			 break;
 		 case CLASSIC:
+			 menu_items[OPTIONS].Render(renderer);
 			 break;
 		 case REDUX_MODE:
+			 menu_items[OPTIONS].Render(renderer);
 			 break;
 		 case OPTIONS:
+			 menu_items[BACK].Render(renderer);
+			 menu_items[FULLSCREEN].Render(renderer);
+
 			 break;
 
 		 }
