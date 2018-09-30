@@ -1,5 +1,4 @@
 #include "snake.h"
-#include "PowerUps.h"
 
 using namespace std;
 
