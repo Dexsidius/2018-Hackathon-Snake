@@ -9,7 +9,7 @@ class Snake{
 private:
 	void set_points(int);
 	void set_current_size(int);
-	void set_movement(string);
+	void set_movement(string, int);
 	void grow_snake(int x, SDL_Color);
 	void logic();
 		
