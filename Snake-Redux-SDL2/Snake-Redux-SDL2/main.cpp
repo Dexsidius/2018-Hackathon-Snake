@@ -10,7 +10,7 @@ using namespace std;
 void Screenstate(bool a, SDL_Window * window, SDL_Renderer * renderer) {
 		if (a) {
 			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-			SDL_RenderSetLogicalSize(renderer, 800, 600);
+			SDL_RenderSetLogicalSize(renderer, 640, 480);
 		}
 		else {
 			SDL_SetWindowFullscreen(window, 0);
@@ -30,7 +30,8 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 	bool running = true;	  // The bool to start the while loop for the game.
 	bool Fullscreen = false;  // The bool that we use to change to fullscreen.
 	bool mouse_click = false; // The bool thatwe use to show mouse inputs.
-	SDL_Rect mouse_rect = SDL_Rect({ 0, 0, 10, 10 }); // The rect for the mouse.
+	SDL_Rect mouse_rect = { 0, 0, 10, 10 }; // The rect for the mouse.
+	SDL_Color screen_color = {0,0,0,255};
 	bool keyboard = SDL_GetKeyboardState(NULL); 
 
 	//Creating a window
@@ -38,8 +39,8 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
 	 renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_PRESENTVSYNC);
 
-	 //Game Events 
-		//We use enum so that we can easily switch between game states
+
+	//We use enum so that we can easily switch between game states
 	 enum Game_States { MENU = 0, CLASSIC = 1, REDUX_MODE = 2, OPTIONS = 3, FULLSCREEN = 4, QUIT = 5, BACK = 6};
 
 	//Buttons
@@ -58,6 +59,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 	 Game_States state = MENU;
 	 while (running) {
 		 mouse_click = false;
+
 		 //OS Events
 		 SDL_PollEvent(&event); // Checking for if Quit has been activated
 		 switch (event.type) {
@@ -80,8 +82,11 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 			 }
 			 break;
 		 }
+
+		 //Game Events
 		 switch (state) {
-		 case MENU: // Cases for when the mouse is hovering over an button or when it is clicking
+		 case MENU: 
+			 // for when the mouse is hovering over an button or when it is clicking
 			 if (menu_items[CLASSIC].IsTouching(&mouse_rect)) {
 				 if (mouse_click) {
 					 state = CLASSIC;
@@ -127,25 +132,27 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		 }
 
 		 //Rendering
-		 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		 SDL_SetRenderDrawColor(renderer, screen_color.r, screen_color.g, screen_color.b, screen_color.a);
 		 SDL_RenderClear(renderer);
 		 switch (state) {
 		 case MENU:
-			 menu_items[MENU].Render(renderer);
-			 menu_items[CLASSIC].Render(renderer);
-			 menu_items[REDUX_MODE].Render(renderer);
-			 menu_items[OPTIONS].Render(renderer);
-			 menu_items[FULLSCREEN].Render(renderer);
+			 screen_color.r = screen_color.g = screen_color.b = 0;
+			 menu_items[MENU].Render();
+			 menu_items[CLASSIC].Render();
+			 menu_items[REDUX_MODE].Render();
+			 menu_items[OPTIONS].Render();
+			 menu_items[FULLSCREEN].Render();
 			 break;
 		 case CLASSIC:
-			 menu_items[OPTIONS].Render(renderer);
+			 screen_color.r = screen_color.g = screen_color.b = 242;
+			 menu_items[OPTIONS].Render();
 			 break;
 		 case REDUX_MODE:
-			 menu_items[OPTIONS].Render(renderer);
+			 menu_items[OPTIONS].Render();
 			 break;
 		 case OPTIONS:
-			 menu_items[BACK].Render(renderer);
-			 menu_items[FULLSCREEN].Render(renderer);
+			 menu_items[BACK].Render();
+			 menu_items[FULLSCREEN].Render();
 
 			 break;
 

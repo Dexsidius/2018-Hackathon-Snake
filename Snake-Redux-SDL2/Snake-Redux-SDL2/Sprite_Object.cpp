@@ -4,7 +4,7 @@ Sprite_Object::Sprite_Object(int x, int y, int w, int h, string filepath, SDL_Re
 {
 	texture = cache.Load_Sprites(renderer, filepath);
 	rect.x = x;
-	rect.h = h;
+	rect.y = y;
 	rect.w = w;
 	rect.h = h;
 	context = renderer;
