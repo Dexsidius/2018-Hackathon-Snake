@@ -1,4 +1,4 @@
-#include "SpriteCache.h"
+#include "sprite_cache.h"
 
 SpriteCache cache = SpriteCache();
 

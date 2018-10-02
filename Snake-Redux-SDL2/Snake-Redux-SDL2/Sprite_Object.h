@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <string>
-#include "SpriteCache.h"
+#include "sprite_cache.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <vector>
-#include "Node.h"
+#include "node.h"
 using namespace std;
 
 class Snake{

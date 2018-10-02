@@ -1,4 +1,4 @@
-#include "Sprite_Object.h"
+#include "sprite_object.h"
 
 Sprite_Object::Sprite_Object(int x, int y, int w, int h, string filepath, SDL_Renderer * renderer)
 {
