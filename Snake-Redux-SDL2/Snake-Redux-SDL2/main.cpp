@@ -19,7 +19,7 @@ void Screenstate(bool a, SDL_Window * window, SDL_Renderer * renderer) {
 
 int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is the entry point, and initializes SDL2
 {
-	SDL_Init(SDL_INIT_VIDEO);       //This activates a specific SDL2 subsystem  
+	SDL_Init(SDL_INIT_VIDEO);       //This activates a specific SDL2 subsystem
 
 	//Forward Declerations
 	const int WIDTH = 640, HEIGHT = 480; //The variable dimensions for the window.
@@ -84,12 +84,12 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		 //Game Events
 		 switch (state) {
 
-		 case MENU: 
+		 case MENU:
 			 // for when the mouse is hovering over an button or when it is clicking
 			 if (menu_items[CLASSIC].IsTouching(&mouse_rect)) {
 				 if (mouse_click) {
 					 state = CLASSIC;
-				 }	
+				 }
 			 }
 			 else if (menu_items[REDUX_MODE].IsTouching(&mouse_rect)) {
 				 if (mouse_click)
@@ -162,7 +162,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 
 
 		 SDL_RenderPresent(renderer);
-		 
+
 
 
 
