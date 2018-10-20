@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <map>
 using namespace std;
 
@@ -12,4 +12,3 @@ public:
 };
 
 extern SpriteCache cache;
-

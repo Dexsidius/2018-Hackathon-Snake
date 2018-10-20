@@ -1,12 +1,12 @@
 #pragma once
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 struct location { int x, y; };
 
 class Node {
 private:
 	SDL_Color clr;
-	
+
 public:
 	SDL_Rect rect = { 0,0,0,0 };
 	location prev_location;

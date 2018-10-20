@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
 #include <vector>
 #include "sprite_object.h"
@@ -54,7 +54,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		Sprite_Object(500,350,100,100,"Snaked_Redux_Sprites/back.bmp",renderer)
 	};
 	//Power Ups
-
+	
 	//Event System
 	Game_States state = MENU;
 	while (running) {
@@ -106,6 +106,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 				 if (mouse_click) {
 					 state = OPTIONS;
 				 }
+			 if ()
 			 }
 			 break;
 
