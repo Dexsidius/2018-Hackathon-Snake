@@ -7,23 +7,26 @@ using namespace std;
 
 class Snake{
 private:
-	string direction;
-	int speed = 10;
+	int speed = 5;
 	void set_max_size(int);
 	void set_movement(string, int);
 	void update_children();
-	void grow_snake(SDL_Color);
-	void logic(bool);
+
+
 
 
 public:
 	int points;
 	bool lost;
 	int current_size;
+	void logic(bool);
+	void grow_snake(SDL_Color);
 	int get_points(int);
 	int get_current_size(int);
-	vector<Node> body;
+	void set_direction(string);
+	string direction;
+	vector<Node> body = {Node(0, 0, 20, 20, SDL_Color({100, 0, 0, 0}))};
 
 	Snake(int x, int y, int w, int h, SDL_Color color);
-	void render(SDL_Renderer *, string);
+	void render(SDL_Renderer *);
 };

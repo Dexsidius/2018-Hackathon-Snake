@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "sprite_object.h"
+#include "snake.h"
 
 
 using namespace std;
@@ -53,16 +54,27 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 		Sprite_Object(300,350,100,100,"Snaked_Redux_Sprites/Quit.bmp",renderer),
 		Sprite_Object(500,350,100,100,"Snaked_Redux_Sprites/back.bmp",renderer)
 	};
+
+	//Snake Instances
+	Snake players[3]{
+			Snake(WIDTH / 2, HEIGHT / 2, 20, 20, SDL_Color({0, 255, 0, 255})),
+			Snake(WIDTH / 8, HEIGHT / 8, 20, 20, SDL_Color({255, 0, 0, 255})),
+			Snake(WIDTH / 4, HEIGHT / 4, 20, 20, SDL_Color({0, 0, 255, 255}))
+	};
+
 	//Power Ups
-	
+	Node apple = Node(rand() % WIDTH, rand() % HEIGHT, 20, 20, SDL_Color({255, 0, 0, 255}));
+
 	//Event System
 	Game_States state = MENU;
 	while (running) {
 		mouse_click = false;
+		auto KEY_STATE = SDL_GetKeyboardState(NULL);
 
 		//OS Events
 		SDL_PollEvent(&event); // Checking for if Quit has been activated
 		switch (event.type) {
+
 		case SDL_QUIT:
 			running = false;
 			break;
@@ -101,13 +113,38 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 				 }
 			 }
 			 break;
+
 		 case CLASSIC:
 			 if (menu_items[OPTIONS].IsTouching(&mouse_rect)) {
 				 if (mouse_click) {
 					 state = OPTIONS;
 				 }
-			 if ()
 			 }
+			 if (apple.IsTouching(& players[0].body[0].rect)){
+				 apple.SetLocation(rand() % WIDTH - 30, rand() % HEIGHT - 30);
+				 players[0].grow_snake(SDL_Color({0, 230, 0, 255}));
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_UP]){
+				 if (players[0].direction != "DOWN"){
+					players[0].set_direction("UP");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_DOWN]){
+				 if(players[0].direction != "UP"){
+					players[0].set_direction("DOWN");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_LEFT]){
+				 if (players[0].direction != "RIGHT"){
+					players[0].set_direction("LEFT");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_RIGHT]){
+				 if(players[0].direction != "LEFT"){
+					players[0].set_direction("RIGHT");
+				 }
+			 }
+			 players[0].logic(false);
 			 break;
 
 		 case REDUX_MODE:
@@ -129,6 +166,11 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 					 }
 				 }
 			 }
+			 if (menu_items[BACK].IsTouching(&mouse_rect)){
+				 if(mouse_click){
+					 state = MENU;
+				 }
+			 }
 			 break;
 		 }
 
@@ -144,17 +186,23 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 			 menu_items[OPTIONS].Render();
 			 menu_items[FULLSCREEN].Render();
 			 break;
+
 		 case CLASSIC:
 			 screen_color.r = screen_color.g = screen_color.b = 242;
 			 menu_items[OPTIONS].Render();
+			 players[0].render(renderer);
+			 apple.Render(renderer);
 			 break;
+
 		 case REDUX_MODE:
 			 menu_items[OPTIONS].Render();
+			 players[1].render(renderer);
+			 players[2].render(renderer);
 			 break;
+
 		 case OPTIONS:
 			 menu_items[BACK].Render();
 			 menu_items[FULLSCREEN].Render();
-
 			 break;
 
 		 }

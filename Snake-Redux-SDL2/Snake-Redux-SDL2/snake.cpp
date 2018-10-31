@@ -19,31 +19,33 @@ void Snake::update_children()
 	for (int i = 1; i < body.size(); i++) {
 		body[i].SetLocation(body[i - 1].prev_location.x, body[i - 1].prev_location.y);
 	}
-		
 }
 
 void Snake::grow_snake( SDL_Color color)
 {
 	SDL_Rect location = body[int(body.size()) - 1].GetLocation();
 	body.push_back(Node(location.x, location.y, location.w, location.h, color));
-	SDL_free(&location);
-	
+
 }
 
 void Snake::logic(bool wall )
 {
 
 	if (direction == "LEFT") {
-		body[0].rect.x -= speed;
+		int x = body[0].rect.x - speed;
+		body[0].SetLocation(x, body[0].rect.y);
 	}
 	else if (direction == "RIGHT") {
-		body[0].rect.x += speed;
+		int x = body[0].rect.x + speed;
+		body[0].SetLocation(x, body[0].rect.y);
 	}
 	else if (direction == "UP") {
-		body[0].rect.y -= speed;
+		int y = body[0].rect.y - speed;
+		body[0].SetLocation(body[0].rect.x, y);
 	}
 	else if (direction == "DOWN") {
-		body[0].rect.y += speed;
+		int y = body[0].rect.y + speed;
+		body[0].SetLocation(body[0].rect.x, y);
 	}
 
 	update_children();
@@ -60,9 +62,6 @@ void Snake::logic(bool wall )
 			break;
 		}
 	}
-
-
-
 }
 
 int Snake::get_points(int points)
@@ -70,7 +69,7 @@ int Snake::get_points(int points)
 	return points;
 }
 
-int Snake:: get_current_size(int size)
+int Snake::get_current_size(int size)
 {
 	size = body.size();
 	return size;
@@ -78,12 +77,18 @@ int Snake:: get_current_size(int size)
 
 Snake::Snake(int x, int y, int w, int h, SDL_Color color)
 {
-	body.push_back(Node(x, y, w, h, color));
+	body[0] = Node(x, y, w, h, color);
+	body.push_back(Node(x - 10, y, w, h, SDL_Color({0,0,0,0})));
 }
 
-void Snake::render(SDL_Renderer * renderer, string)
+void Snake::render(SDL_Renderer * renderer)
 {
-	for (auto & part : body) {
-		part.Render(renderer);
+	for (int i = 2; i < body.size(); i++) {
+		body[i].Render(renderer);
 	}
+	body[0].Render(renderer);
+}
+
+void Snake::set_direction(string d){
+	direction = d;
 }

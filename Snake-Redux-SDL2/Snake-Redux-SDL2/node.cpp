@@ -2,7 +2,7 @@
 
 Node::~Node()
 {
-	SDL_free(&rect);
+
 }
 
 Node::Node(int x, int y, int w, int h, SDL_Color color)
@@ -11,6 +11,11 @@ Node::Node(int x, int y, int w, int h, SDL_Color color)
 	rect.y = y;
 	rect.w = w;
 	rect.h = h;
+
+	clr.r = color.r;
+	clr.g = color.g;
+	clr.b = color.b;
+	clr.a = color.a;
 
 	prev_location.x = rect.x;
 	prev_location.y = rect.y;
