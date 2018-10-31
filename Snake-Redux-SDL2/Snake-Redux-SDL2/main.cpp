@@ -58,12 +58,13 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 	//Snake Instances
 	Snake players[3]{
 			Snake(WIDTH / 2, HEIGHT / 2, 20, 20, SDL_Color({0, 255, 0, 255})),
-			Snake(WIDTH / 8, HEIGHT / 8, 20, 20, SDL_Color({255, 0, 0, 255})),
-			Snake(WIDTH / 4, HEIGHT / 4, 20, 20, SDL_Color({0, 0, 255, 255}))
+			Snake(400, 400, 20, 20, SDL_Color({255, 0, 0, 255})),
+			Snake(20, 20, 20, 20, SDL_Color({0, 0, 255, 255}))
 	};
 
 	//Power Ups
-	Node apple = Node(rand() % WIDTH, rand() % HEIGHT, 20, 20, SDL_Color({255, 0, 0, 255}));
+	Node apple = Node(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20, 20, 20, SDL_Color({255, 0, 0, 255}));
+
 
 	//Event System
 	Game_States state = MENU;
@@ -121,8 +122,12 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 				 }
 			 }
 			 if (apple.IsTouching(& players[0].body[0].rect)){
-				 apple.SetLocation(rand() % WIDTH - 30, rand() % HEIGHT - 30);
-				 players[0].grow_snake(SDL_Color({0, 230, 0, 255}));
+				 apple.SetLocation(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20);
+				 players[0].points += 1;
+				 players[0].grow_snake(SDL_Color({0, 200, 0, 255}));
+				 if (players[0].points % 5 == 0){
+					 players[0].increase_speed();
+				 }
 			 }
 			 if (KEY_STATE[SDL_SCANCODE_UP]){
 				 if (players[0].direction != "DOWN"){
@@ -144,7 +149,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 					players[0].set_direction("RIGHT");
 				 }
 			 }
-			 players[0].logic(false);
+			 players[0].logic(false, WIDTH, HEIGHT);
 			 break;
 
 		 case REDUX_MODE:
@@ -153,6 +158,48 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 					 state = OPTIONS;
 				 }
 			 }
+			 if (KEY_STATE[SDL_SCANCODE_W]){
+				 if (players[1].direction != "DOWN"){
+					players[1].set_direction("UP");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_S]){
+				 if(players[1].direction != "UP"){
+					players[1].set_direction("DOWN");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_A]){
+				 if (players[1].direction != "RIGHT"){
+					players[1].set_direction("LEFT");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_D]){
+				 if(players[1].direction != "LEFT"){
+					players[1].set_direction("RIGHT");
+				 }
+			 }
+			 players[1].logic(false, WIDTH, HEIGHT);
+			 if (KEY_STATE[SDL_SCANCODE_UP]){
+				 if (players[2].direction != "DOWN"){
+					players[2].set_direction("UP");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_DOWN]){
+				 if(players[2].direction != "UP"){
+					players[2].set_direction("DOWN");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_LEFT]){
+				 if (players[2].direction != "RIGHT"){
+					players[2].set_direction("LEFT");
+				 }
+			 }
+			 if (KEY_STATE[SDL_SCANCODE_RIGHT]){
+				 if(players[2].direction != "LEFT"){
+					players[2].set_direction("RIGHT");
+				 }
+			 }
+			 players[2].logic(false, WIDTH, HEIGHT);
 			 break;
 
 		 case OPTIONS:
@@ -189,9 +236,9 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 
 		 case CLASSIC:
 			 screen_color.r = screen_color.g = screen_color.b = 242;
+			 apple.Render(renderer);
 			 menu_items[OPTIONS].Render();
 			 players[0].render(renderer);
-			 apple.Render(renderer);
 			 break;
 
 		 case REDUX_MODE:

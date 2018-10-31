@@ -13,17 +13,17 @@ private:
 	void update_children();
 
 
-
-
 public:
 	int points;
 	bool lost;
 	int current_size;
-	void logic(bool);
+	void increase_speed();
+	void logic(bool, int width = 0, int height = 0);
 	void grow_snake(SDL_Color);
 	int get_points(int);
 	int get_current_size(int);
 	void set_direction(string);
+
 	string direction;
 	vector<Node> body = {Node(0, 0, 20, 20, SDL_Color({100, 0, 0, 0}))};
 

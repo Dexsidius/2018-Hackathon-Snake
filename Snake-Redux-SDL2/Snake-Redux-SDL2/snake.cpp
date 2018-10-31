@@ -28,35 +28,42 @@ void Snake::grow_snake( SDL_Color color)
 
 }
 
-void Snake::logic(bool wall )
+void Snake::logic(bool wall, int WIDTH, int HEIGHT)
 {
+	if (!lost){
+		if (direction == "LEFT") {
+			int x = body[0].rect.x - speed;
+			body[0].SetLocation(x, body[0].rect.y);
+		}
+		else if (direction == "RIGHT") {
+			int x = body[0].rect.x + speed;
+			body[0].SetLocation(x, body[0].rect.y);
+		}
+		else if (direction == "UP") {
+			int y = body[0].rect.y - speed;
+			body[0].SetLocation(body[0].rect.x, y);
+		}
+		else if (direction == "DOWN") {
+			int y = body[0].rect.y + speed;
+			body[0].SetLocation(body[0].rect.x, y);
+		}
+		update_children();
+	}
 
-	if (direction == "LEFT") {
-		int x = body[0].rect.x - speed;
-		body[0].SetLocation(x, body[0].rect.y);
-	}
-	else if (direction == "RIGHT") {
-		int x = body[0].rect.x + speed;
-		body[0].SetLocation(x, body[0].rect.y);
-	}
-	else if (direction == "UP") {
-		int y = body[0].rect.y - speed;
-		body[0].SetLocation(body[0].rect.x, y);
-	}
-	else if (direction == "DOWN") {
-		int y = body[0].rect.y + speed;
-		body[0].SetLocation(body[0].rect.x, y);
-	}
-
-	update_children();
 
 	if (!wall) {
 		if (body[0].rect.y < 2)
-			body[0];
+			body[0].SetLocation(body[0].rect.x, HEIGHT - 25);
+		if (body[0].rect.y > HEIGHT - 20)
+			body[0].SetLocation(body[0].rect.x, 3);
+		if (body[0].rect.x < 2)
+			body[0].SetLocation(WIDTH -25, body[0].rect.y);
+		if (body[0].rect.x > WIDTH - 20)
+			body[0].SetLocation(3, body[0].rect.y);
 	}
 
 
-	for (auto i = 1; i < body.size(); i++) {
+	for (auto i = 10; i < body.size(); i++) {
 		if (body[0].IsTouching(&body[i].rect)) {
 			lost = true;
 			break;
@@ -91,4 +98,8 @@ void Snake::render(SDL_Renderer * renderer)
 
 void Snake::set_direction(string d){
 	direction = d;
+}
+
+void Snake::increase_speed(){
+	speed += 1;
 }

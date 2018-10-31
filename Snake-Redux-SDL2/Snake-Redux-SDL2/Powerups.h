@@ -1,10 +1,10 @@
 #include <string>
+#include "node.h"
 
-class Powerups{
+class Powerups : public Node{
 private:
-  string items[3] = {"Wall", "Pellets", "Big Apple"};
 
 public:
-  void spawn_powerup(int[], int, int);
+  void spawn_powerup(int, int);
 
 }
