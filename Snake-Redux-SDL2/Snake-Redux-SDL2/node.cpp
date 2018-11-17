@@ -1,8 +1,8 @@
-#include "Node.h"
+#include "node.h"
 
 Node::~Node()
 {
-	
+
 }
 
 Node::Node(int x, int y, int w, int h, SDL_Color color)
@@ -12,10 +12,20 @@ Node::Node(int x, int y, int w, int h, SDL_Color color)
 	rect.w = w;
 	rect.h = h;
 
+	clr.r = color.r;
+	clr.g = color.g;
+	clr.b = color.b;
+	clr.a = color.a;
+
+	prev_location.x = rect.x;
+	prev_location.y = rect.y;
+
 }
 
 void Node::SetLocation(int x, int y)
 {
+	prev_location.x = rect.x;
+	prev_location.y = rect.y;
 	rect.x = x;
 	rect.y = y;
 }
