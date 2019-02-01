@@ -3,6 +3,7 @@
 #include <vector>
 #include "sprite_object.h"
 #include "snake.h"
+#include <random>
 
 
 using namespace std;
@@ -64,6 +65,11 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 
 	//Power Ups
 	Node apple = Node(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20, 20, 20, SDL_Color({255, 0, 0, 255}));
+	Node big_apple = Node(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20, 20, 20, SDL_Color({255, 0, 255, 255}));
+	Node wall = Node(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20, 20, 20, SDL_Color({255, 255, 0, 255}));
+	Node pellet = Node(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20, 20, 20, SDL_Color({0, 255, 255, 255}));
+	Node pickups[3] = {big_apple, wall, pellet};
+	vector<Node> spawned = {};
 
 
 	//Event System
@@ -142,7 +148,7 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 			 if (KEY_STATE[SDL_SCANCODE_LEFT]){
 				 if (players[0].direction != "RIGHT"){
 					players[0].set_direction("LEFT");
-				 }
+				}
 			 }
 			 if (KEY_STATE[SDL_SCANCODE_RIGHT]){
 				 if(players[0].direction != "LEFT"){
@@ -158,6 +164,45 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 					 state = OPTIONS;
 				 }
 			 }
+				//Need help with adding the collision conditions
+			 if (big_apple.IsTouching(& players[1].body[0].rect)){
+				 players[1].points += 3;
+				 players[1].grow_snake(SDL_Color({240, 0, 0, 255}));
+			 }
+			 
+			 if(big_apple.IsTouching(& players[2].body[0].rect)){
+				 players[2].points += 3;
+				 players[2].grow_snake(SDL_Color({0, 200, 0, 255}));
+			 }
+			 if (apple.IsTouching(& players[1].body[0].rect)){
+				 apple.SetLocation(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20);
+				 players[1].points += 1;
+				 players[1].grow_snake(SDL_Color({200, 0, 0, 255}));
+				 if (players[1].points % 5 == 0){
+					 players[1].increase_speed();
+				 }
+			 }
+			 
+			 if (apple.IsTouching(& players[2].body[0].rect)){
+				 apple.SetLocation(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT - 25) + 20);
+				 players[2].points += 1;
+				 players[2].grow_snake(SDL_Color({0, 200, 0, 255}));
+				 if (players[2].points % 5 == 0){
+					 players[2].increase_speed();
+				 }
+			 }
+
+			 if (spawned.size() < 1){
+				 spawned.push_back(pickups[rand() % 3]);
+				 spawned[0].SetLocation(rand() % (WIDTH - 25) + 20, rand() % (HEIGHT -25) + 20);
+			 }
+			 if (spawned[0].IsTouching(& players[1].body[0].rect)){
+				 spawned.pop_back();
+			 }
+			 if (spawned[0].IsTouching(& players[2].body[0].rect)){
+				 spawned.pop_back();
+			 }
+
 			 if (KEY_STATE[SDL_SCANCODE_W]){
 				 if (players[1].direction != "DOWN"){
 					players[1].set_direction("UP");
@@ -242,6 +287,10 @@ int main(int argc, char ** argv) //Equivalent to WinMain() on Windows, this is t
 			 break;
 
 		 case REDUX_MODE:
+		 	 if (spawned.size() == 1){
+				  spawned[0].Render(renderer);
+			  }
+		 	 apple.Render(renderer);
 			 menu_items[OPTIONS].Render();
 			 players[1].render(renderer);
 			 players[2].render(renderer);

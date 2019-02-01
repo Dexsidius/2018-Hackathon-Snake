@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 *.sln
 *.vcxproj
+.vscode/tasks.json
+.vscode/launch.json
